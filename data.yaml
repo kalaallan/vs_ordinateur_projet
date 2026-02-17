@@ -1,0 +1,13 @@
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 9
+names: ['Ball', 'Hoop', 'Period', 'Player', 'Ref', 'Shot Clock', 'Team Name', 'Team Points', 'Time Remaining']
+
+roboflow:
+  workspace: roboflow-universe-projects
+  project: basketball-players-fy4c2
+  version: 25
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/roboflow-universe-projects/basketball-players-fy4c2/dataset/25
