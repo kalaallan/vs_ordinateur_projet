@@ -15,6 +15,19 @@ BALL, HOOP, PLAYER = 0, 1, 3
 model = YOLO(MODEL_PATH)
 
 
+def predict_with_legacy_nms_if_needed(model, source, **kwargs):
+    uses_end2end_head = bool(getattr(getattr(model, "model", None), "end2end", False))
+    if not uses_end2end_head:
+        return model.predict(source, **kwargs)
+
+    try:
+        return model.predict(source, end2end=False, **kwargs)
+    except Exception as exc:
+        if "end2end" in str(exc).lower():
+            return model.predict(source, **kwargs)
+        raise
+
+
 def center(xyxy):
     x1, y1, x2, y2 = xyxy
     return ((x1 + x2) / 2, (y1 + y2) / 2)
@@ -36,7 +49,8 @@ for name in sorted(os.listdir(SOURCE_DIR)):
     if img is None:
         continue
 
-    r = model.predict(
+    r = predict_with_legacy_nms_if_needed(
+        model,
         path, conf=0.5, iou=0.5, classes=[BALL, HOOP, PLAYER], verbose=False
     )[0]
 

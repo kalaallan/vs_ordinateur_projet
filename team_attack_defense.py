@@ -25,6 +25,19 @@ os.makedirs(os.path.join(OUT_DIR, "images"), exist_ok=True)
 model = YOLO(MODEL_PATH)
 
 
+def predict_with_legacy_nms_if_needed(model, source, **kwargs):
+    uses_end2end_head = bool(getattr(getattr(model, "model", None), "end2end", False))
+    if not uses_end2end_head:
+        return model.predict(source, **kwargs)
+
+    try:
+        return model.predict(source, end2end=False, **kwargs)
+    except Exception as exc:
+        if "end2end" in str(exc).lower():
+            return model.predict(source, **kwargs)
+        raise
+
+
 def box_center_xyxy(xyxy):
     x1, y1, x2, y2 = xyxy
     return ((x1 + x2) / 2.0, (y1 + y2) / 2.0)
@@ -111,7 +124,8 @@ with open(csv_path, "w", newline="", encoding="utf-8") as f:
         if img is None:
             continue
 
-        pred = model.predict(
+        pred = predict_with_legacy_nms_if_needed(
+            model,
             path, conf=CONF, iou=IOU, classes=[BALL_CLS, PLAYER_CLS],
             verbose=False
         )[0]
