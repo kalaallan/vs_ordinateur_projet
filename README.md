@@ -1,6 +1,6 @@
 # Basketball Detection - Training Guide (YOLO11, YOLO12, YOLO26)
 
-Ce README explique comment entrainer et executer les 3 modeles deja presents dans ce projet:
+Ce README explique comment entrainer et executer les 3 modeles dans ce projet:
 - `YOLO11` (base: `yolo11n.pt`)
 - `YOLO12` (base: `yolo12n.pt`)
 - `YOLO26` (base: `yolo26n.pt`)
@@ -10,7 +10,6 @@ Ce README explique comment entrainer et executer les 3 modeles deja presents dan
 Depuis la racine du projet:
 
 ```bash
-cd "/Users/wajdi/Computer vision/vs_ordinateur_projet"
 python3 -m venv vision
 source vision/bin/activate
 pip install --upgrade pip
@@ -46,7 +45,6 @@ Parametres du script:
 Sortie principale:
 - `runs/detect/train/weights/best.pt`
 
-Note: dans ce repo, un run YOLO11 supplementaire existe aussi sous `runs/detect/train3/`.
 
 ### B. YOLO12
 
@@ -86,9 +84,6 @@ Parametres du script:
 Sortie principale:
 - `runs/detect/yolo26/weights/best.pt`
 
-Le script inclut une validation compatible selon le head du modele (`end2end` ou non).
-
-
 ## 4. Comparer les 3 modeles
 
 comparaisanr sur le meme split avec les memes parametres:
@@ -106,7 +101,7 @@ Metriques a comparer:
 - `recall`
 - performance par classe (surtout `Ball`, `Player`, `Hoop`)
 
-## 6. Scripts d'analyse deja presents
+## 6. Scripts d'analyse
 
 ### `attack_score.py`
 - Entree: images de `valid/images`
