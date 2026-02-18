@@ -88,19 +88,10 @@ Sortie principale:
 
 Le script inclut une validation compatible selon le head du modele (`end2end` ou non).
 
-## 4. Validation manuelle (optionnelle)
 
-Pour valider un modele specifique:
+## 4. Comparer les 3 modeles
 
-```bash
-yolo val model="runs/detect/train3/weights/best.pt" data="data.yaml" split=val imgsz=640
-yolo val model="runs/detect/yolo12/weights/best.pt" data="data.yaml" split=val imgsz=640
-yolo val model="runs/detect/yolo26/weights/best.pt" data="data.yaml" split=val imgsz=640
-```
-
-## 5. Comparer les 3 modeles proprement
-
-Toujours comparer sur le meme split (ex: `test`) avec les memes parametres:
+comparaisanr sur le meme split avec les memes parametres:
 
 ```bash
 yolo val model="runs/detect/train3/weights/best.pt" data="data.yaml" split=test imgsz=640 batch=16 conf=0.001 iou=0.7 name=cmp_yolo11
@@ -115,21 +106,7 @@ Metriques a comparer:
 - `recall`
 - performance par classe (surtout `Ball`, `Player`, `Hoop`)
 
-## 6. Inference rapide (camera/video)
-
-Webcam:
-
-```bash
-yolo predict model="runs/detect/train3/weights/best.pt" source=0 show=True conf=0.4 iou=0.5
-```
-
-Video:
-
-```bash
-yolo predict model="runs/detect/train3/weights/best.pt" source="match.mp4" save=True conf=0.4 iou=0.5
-```
-
-## 7. Scripts d'analyse deja presents
+## 6. Scripts d'analyse deja presents
 
 ### `attack_score.py`
 - Entree: images de `valid/images`
