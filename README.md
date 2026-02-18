@@ -307,7 +307,7 @@ Pre-requis specifique:
 ### 7.9 `analyze.py`
 - fichier present mais non implemente (vide).
 
-## 8. Procedure d'execution recommandee (reproductible)
+## 8. Procedure d'execution
 
 1. activer l'environnement
 2. verifier la presence des poids de base (`yolo11n.pt`, `yolo12n.pt`, `yolo26n.pt`)
@@ -319,12 +319,30 @@ Pre-requis specifique:
    - `attack_defense_full.py`
 6. exporter les dossiers resultats (`runs/detect`, `team_results`, `attack_defense_results`, `visual_compare`)
 
-## 9. Livrables a fournir
+## 9. Detection en temps reel sur video
 
-- code source documente (scripts entrainement, inference, evaluation)
-- `README.md` d'execution (ce document)
-- poids/modeles utilises (`best.pt` des runs retenus)
-- resultats:
-  - captures visuelles (`clean_preds`, `visual_compare`, `attack_defense_results/images`)
-  - metriques CSV (`team_results/metrics.csv`, `attack_defense_results/metrics.csv`)
-  - tableaux de performances YOLO (mAP, precision, recall)
+Exemple avec la video `Ja Morant Block.mp4`:
+
+```bash
+cd "/Users/wajdi/Computer vision/vs_ordinateur_projet"
+source "/Users/wajdi/Computer vision/vs_ordinateur_projet/vision/bin/activate"
+
+yolo predict model="/Users/wajdi/Computer vision/vs_ordinateur_projet/runs/detect/yolo12/weights/best.pt" source="/Users/wajdi/Computer vision/vs_ordinateur_projet/Ja Morant Block.mp4" show=True conf=0.4 iou=0.5 imgsz=640
+```
+
+Modeles disponibles:
+- YOLO11: `runs/detect/train3/weights/best.pt`
+- YOLO12: `runs/detect/yolo12/weights/best.pt`
+- YOLO26: `runs/detect/yolo26/weights/best.pt`
+
+Detection live webcam:
+
+```bash
+yolo predict model="/Users/wajdi/Computer vision/vs_ordinateur_projet/runs/detect/yolo12/weights/best.pt" source=0 show=True conf=0.4 iou=0.5 imgsz=640
+```
+
+Si la commande `yolo` n'est pas reconnue:
+
+```bash
+python -m ultralytics yolo predict model="/Users/wajdi/Computer vision/vs_ordinateur_projet/runs/detect/yolo12/weights/best.pt" source="/Users/wajdi/Computer vision/vs_ordinateur_projet/Ja Morant Block.mp4" show=True conf=0.4 iou=0.5 imgsz=640
+```
